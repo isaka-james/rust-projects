@@ -4,6 +4,12 @@
     <img src="https://komarev.com/ghpvc/?username=rust-projects&label=Rust%20BootCamp&color=0e75b6&style=flat" alt="since 21 Feb,2024" />
   </p>
 
+*This GitHub repository is your Rust programming playground, no matter your skill level!  Beginners can start with easy programs to learn the ropes.  Intermediate coders can tackle trickier problems to test their knowledge.  And for the Rust experts, there are complex programs to push your limits.   But it's more than just exercises!   Share your own programs, challenge others, and learn together as a team.*    
+
+So come explore the world of Rust - it's fast, safe, and lets you write awesome code!  ️✨
+
+
+
 #### Windows:
 
 1. **Download Installer:**
