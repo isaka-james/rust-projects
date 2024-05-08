@@ -1,19 +1,19 @@
 use std::io;
 use std::io::Write;
 
-fn int(number: String)->i32{
-    match number.trim().parse(){
-        Ok(num)=>num,
-        Err(_)=>{
+fn int(number: String) -> i32 {
+    match number.trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
             return 0;
         }
     }
 }
 
-fn main(){
+fn main() {
     let mut input = String::new();
-    let mut _num:i32;
-    let  choice:String;
+    let mut _num: i32;
+    let choice: String;
 
     println!("\n\t\t CELSIUS/FAHRENHEIT CONVERTION PROGRAM!\n\n\t\t1. Celsius -> Fahrenheit.\n\t\t2. Fehrenheit -> Celsius.");
 
@@ -35,15 +35,14 @@ fn main(){
         .expect("Failed to get Number input!");
     input = input.trim().to_string();
 
-
-    match choice.as_str(){
-        "1" =>{
-            println!("Answer: {}F",(9/5)*int(input)+32);
-        },
-        "2" =>{
-            println!("Answer: {}C",(int(input)-32)*(5/9));
-        },
-        _ =>{
+    match choice.as_str() {
+        "1" => {
+            println!("Answer: {}F", (9 / 5) * int(input) + 32);
+        }
+        "2" => {
+            println!("Answer: {}C", (int(input) - 32) * (5 / 9));
+        }
+        _ => {
             println!("Wrong Input!!");
         }
     }
