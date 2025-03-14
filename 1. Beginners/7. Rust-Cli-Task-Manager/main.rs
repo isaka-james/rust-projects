@@ -1,8 +1,8 @@
-use std::fs::{self, File};
-use std::io::{Read, Write};
-use std::path::Path;
-use serde::{Deserialize, Serialize};
 use clap::{Arg, Command};
+use serde::{Deserialize, Serialize};
+use std::fs::{self, File};
+use std::io::Read;
+use std::path::Path;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Task {
@@ -46,7 +46,8 @@ fn load_tasks() -> Vec<Task> {
     }
     let mut file = File::open(FILE_PATH).expect("Failed to open file");
     let mut contents = String::new();
-    file.read_to_string(&mut contents).expect("Failed to read file");
+    file.read_to_string(&mut contents)
+        .expect("Failed to read file");
     serde_json::from_str(&contents).unwrap_or_else(|_| Vec::new())
 }
 
@@ -57,7 +58,11 @@ fn save_tasks(tasks: &Vec<Task>) {
 
 fn add_task(tasks: &mut Vec<Task>, description: String) {
     let id = tasks.len() + 1;
-    tasks.push(Task { id, description, done: false });
+    tasks.push(Task {
+        id,
+        description,
+        done: false,
+    });
     save_tasks(tasks);
     println!("Task added successfully!");
 }
@@ -68,7 +73,12 @@ fn list_tasks(tasks: &Vec<Task>) {
         return;
     }
     for task in tasks {
-        println!("{} [{}] - {}", task.id, if task.done { "✓" } else { " " }, task.description);
+        println!(
+            "{} [{}] - {}",
+            task.id,
+            if task.done { "✓" } else { " " },
+            task.description
+        );
     }
 }
 
