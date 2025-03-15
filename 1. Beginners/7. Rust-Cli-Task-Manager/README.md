@@ -25,3 +25,5 @@ After building the project:
 ```sh
 target/release/cli-task-manager list
 ```
+
+![image](https://github.com/user-attachments/assets/bc380069-8235-4626-bfbf-8e06c3b0e240)

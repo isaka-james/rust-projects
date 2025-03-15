@@ -1,5 +1,5 @@
 use std::fs::{self, File};
-use std::io::{Read, Write};
+use std::io::{Read};
 use std::path::Path;
 use serde::{Deserialize, Serialize};
 use clap::{Arg, Command};
@@ -27,15 +27,21 @@ fn main() {
     let mut tasks = load_tasks();
 
     if let Some(matches) = matches.subcommand_matches("add") {
-        let desc = matches.get_one::<String>("desc").unwrap().to_string();
+        let desc = matches.get_one::<String>("desc").unwrap().as_str();
         add_task(&mut tasks, desc);
     } else if matches.subcommand_matches("list").is_some() {
         list_tasks(&tasks);
     } else if let Some(matches) = matches.subcommand_matches("done") {
-        let id: usize = matches.get_one::<String>("id").unwrap().parse().unwrap();
+        let id: usize = matches.get_one::<String>("id").unwrap().parse().unwrap_or_else(|_| {
+            eprintln!("Invalid ID");
+            std::process::exit(1);
+        });
         mark_done(&mut tasks, id);
     } else if let Some(matches) = matches.subcommand_matches("remove") {
-        let id: usize = matches.get_one::<String>("id").unwrap().parse().unwrap();
+        let id: usize = matches.get_one::<String>("id").unwrap().parse().unwrap_or_else(|_| {
+            eprintln!("Invalid ID");
+            std::process::exit(1);
+        });
         remove_task(&mut tasks, id);
     }
 }
@@ -55,9 +61,9 @@ fn save_tasks(tasks: &Vec<Task>) {
     fs::write(FILE_PATH, json).expect("Failed to write file");
 }
 
-fn add_task(tasks: &mut Vec<Task>, description: String) {
+fn add_task(tasks: &mut Vec<Task>, description: &str) {
     let id = tasks.len() + 1;
-    tasks.push(Task { id, description, done: false });
+    tasks.push(Task { id, description: description.to_string(), done: false });
     save_tasks(tasks);
     println!("Task added successfully!");
 }
@@ -68,7 +74,7 @@ fn list_tasks(tasks: &Vec<Task>) {
         return;
     }
     for task in tasks {
-        println!("{} [{}] - {}", task.id, if task.done { "✓" } else { " " }, task.description);
+        println!("{} [{}] - {}", task.id, if task.done { "✓" } else { "•" }, task.description);
     }
 }
 
